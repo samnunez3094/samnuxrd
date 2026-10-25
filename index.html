@@ -49,7 +49,7 @@ async function loadRafflesFromSupabase() {
   const cards = document.querySelector("#sorteos .cards");
   if (!cards) return;
 
-  if (SUPABASE_PUBLISHABLE_KEY === "sb_publishable_iYWjYTwK12fDC0XjCX0p0A_jnLDAf") {
+if (SUPABASE_PUBLISHABLE_KEY === "PEGA_AQUI_TU_SB_PUBLISHABLE_KEY") {
     cards.innerHTML = '<article class="card"><h3>Conexión pendiente</h3><p class="muted">Edita index.html y pega tu clave publicable de Supabase en la variable SUPABASE_PUBLISHABLE_KEY. No uses una clave secreta.</p></article>';
     return;
   }
