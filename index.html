@@ -28,7 +28,7 @@ header{height:78px;display:flex;align-items:center;justify-content:space-between
   <div class="hero-art"><div class="orb"></div><div class="floating float1">Premios destacados<strong>Experiencia premium</strong></div><div class="prize-card"><div class="prize-visual"><span class="phone">🎁</span></div><div style="display:flex;justify-content:space-between;align-items:center;margin-top:15px"><div><div class="muted">SAMNUXRD · DEMO</div><strong style="font-size:18px;display:block;margin-top:5px">Grandes premios</strong></div><span style="font-size:25px">✦</span></div></div><div class="floating float2">Interfaz digital<strong style="color:#c7f58b">Lista para explorar</strong></div></div>
  </section>
  <section class="section" id="sorteos">
-  <div class="section-head"><div><div class="eyebrow" style="margin-bottom:14px">DESCUBRE</div><h2>Sorteos destacados</h2><p class="sub">Ejemplos visuales para conocer la plataforma. No están activos para venta.</p></div><span class="muted">Todos los premios son de demostración</span></div>
+  <div class="section-head"><div><div class="eyebrow" style="margin-bottom:14px">DESCUBRE</div><h2>Sorteos destacados</h2><p class="sub">Sorteos informativos consultados desde la base de datos. Esta web no vende boletos.</p></div><span class="muted">Consulta informativa · sin ventas</span></div>
   <div class="cards">
    <article class="card"><div class="product-art"><span class="tag">DEMO</span><span>📱</span></div><h3>Tech Premium</h3><p class="muted">Ejemplo de premio tecnológico</p><div class="price-row"><div><div class="muted">Precio ilustrativo</div><div class="price">RD$ 100</div></div><div class="availability">10,000 números demo</div></div><button class="btn" onclick="openNumbers('Tech Premium',100)">Ver números</button></article>
    <article class="card"><div class="product-art green"><span class="tag">DEMO</span><span>🚗</span></div><h3>Experiencia sobre ruedas</h3><p class="muted">Ejemplo de premio automotriz</p><div class="price-row"><div><div class="muted">Precio ilustrativo</div><div class="price">RD$ 250</div></div><div class="availability">10,000 números demo</div></div><button class="btn" onclick="openNumbers('Experiencia sobre ruedas',250)">Ver números</button></article>
@@ -37,16 +37,116 @@ header{height:78px;display:flex;align-items:center;justify-content:space-between
   <div class="numbers" id="numbers"><div style="display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap"><div><div class="muted">SELECCIÓN DEMO</div><h3 id="raffleName" style="margin:5px 0">Sorteo</h3></div><button class="btn secondary" onclick="closeNumbers()">Cerrar ×</button></div><p class="muted">Selecciona números de prueba. Esta demostración no reserva ni vende boletos.</p><input id="searchNum" placeholder="Buscar número (1–10000)" type="number" min="1" max="10000" style="background:#0a0f1d;border:1px solid var(--line);border-radius:10px;padding:11px;color:white;width:100%;max-width:320px" oninput="searchNumber()"><div class="number-grid" id="numberGrid"></div><div class="checkout"><span id="selectedText" class="muted">0 números seleccionados</span><strong id="total">RD$ 0</strong><button class="btn" onclick="demoCheckout()">Continuar (demo)</button></div></div>
  </section>
  <section class="section" id="como-funciona"><div class="section-head"><div><div class="eyebrow" style="margin-bottom:14px">SENCILLO Y CLARO</div><h2>¿Cómo funciona?</h2><p class="sub">Una experiencia pensada para que cada paso sea fácil de entender.</p></div></div><div class="how"><div class="step"><div class="step-num">01</div><h3>Explora</h3><p>Conoce los premios, revisa los detalles y consulta las bases de cada sorteo.</p></div><div class="step"><div class="step-num">02</div><h3>Selecciona</h3><p>En la futura versión activa podrás seleccionar números y revisar el resumen de tu participación.</p></div><div class="step"><div class="step-num">03</div><h3>Consulta</h3><p>Los resultados y las condiciones deberán publicarse de forma clara y verificable.</p></div></div></section>
- <section id="transparencia" class="notice"><strong>Importante — versión de demostración.</strong> SamNuxRD es un nombre provisional y no se ha confirmado su disponibilidad en ONAPI. Los premios, precios y números de esta página son ejemplos ficticios. No se venden boletos, no se aceptan pagos y no hay sorteos activos. Antes de habilitar ventas, se deben confirmar las autorizaciones legales aplicables en República Dominicana, revisar las bases y configurar una pasarela de pagos compatible y aprobada.</section>
+ <section id="transparencia" class="notice"><strong>Importante — versión de demostración.</strong> SamNuxRD es un nombre de proyecto; verifica su disponibilidad en ONAPI antes de operar. Los premios, precios y números de esta página son ejemplos ficticios. No se venden boletos, no se aceptan pagos y no hay sorteos activos. Antes de habilitar ventas, se deben confirmar las autorizaciones legales aplicables en República Dominicana, revisar las bases y configurar una pasarela de pagos compatible y aprobada.</section>
 </main>
 <footer><div class="wrap footer-row"><div><a class="brand" href="#" style="font-size:16px"><span class="mark" style="width:30px;height:30px;font-size:12px">SN</span>SamNuxRD</a><p>Concepto de plataforma · nombre provisional</p></div><div class="footer-links"><a href="#transparencia">Bases y condiciones</a><a href="#transparencia">Privacidad</a><a href="mailto:contacto@example.com">Contacto demo</a></div><div>© 2026 SamNuxRD · Demo</div></div></footer>
 <script>
-let currentPrice=0, selected=new Set(), currentName='';
-function openNumbers(name,price){currentName=name;currentPrice=price;selected.clear();document.getElementById('raffleName').textContent=name;document.getElementById('numbers').classList.add('active');document.getElementById('searchNum').value='';renderNumbers();document.getElementById('numbers').scrollIntoView({behavior:'smooth',block:'start'});}
-function closeNumbers(){document.getElementById('numbers').classList.remove('active');}
-function renderNumbers(start=1){const grid=document.getElementById('numberGrid');grid.innerHTML='';for(let i=start;i<Math.min(start+40,10001);i++){const b=document.createElement('button');b.className='num'+(selected.has(i)?' selected':'');b.textContent=String(i).padStart(5,'0');b.onclick=()=>{selected.has(i)?selected.delete(i):selected.add(i);renderNumbers(i-(i-1)%40);};grid.appendChild(b)}updateTotal();}
-function searchNumber(){let n=parseInt(document.getElementById('searchNum').value||'1',10);n=Math.max(1,Math.min(10000,n));renderNumbers(n);}
-function updateTotal(){document.getElementById('selectedText').textContent=selected.size+' número(s) seleccionados';document.getElementById('total').textContent='RD$ '+(selected.size*currentPrice).toLocaleString('es-DO');}
-function demoCheckout(){alert('Modo demostración: no se procesan pagos ni se reservan números.');}
+
+const SUPABASE_URL = "https://ulrydnpduwlyfxlwdbj.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_iYWjYTwK12fDC0XjCX0p0A_jnLDAf";
+
+async function loadRafflesFromSupabase() {
+  const cards = document.querySelector("#sorteos .cards");
+  if (!cards) return;
+
+  if (SUPABASE_PUBLISHABLE_KEY === "sb_publishable_iYWjYTwK12fDC0XjCX0p0A_jnLDAf") {
+    cards.innerHTML = '<article class="card"><h3>Conexión pendiente</h3><p class="muted">Edita index.html y pega tu clave publicable de Supabase en la variable SUPABASE_PUBLISHABLE_KEY. No uses una clave secreta.</p></article>';
+    return;
+  }
+
+  cards.innerHTML = '<article class="card"><p class="muted">Cargando información desde SamNuxRD…</p></article>';
+
+  try {
+    const endpoint = SUPABASE_URL +
+      "/rest/v1/raffles?select=id,slug,title,prize,description,image_url,ticket_price,currency,total_tickets,status,created_at" +
+      "&status=not.in.(borrador,pendiente_autorizacion)&order=created_at.desc";
+    const response = await fetch(endpoint, {
+      headers: {
+        apikey: SUPABASE_PUBLISHABLE_KEY,
+        Authorization: "Bearer " + SUPABASE_PUBLISHABLE_KEY
+      }
+    });
+    if (!response.ok) throw new Error("Supabase HTTP " + response.status);
+    const raffles = await response.json();
+    cards.innerHTML = "";
+
+    if (!Array.isArray(raffles) || raffles.length === 0) {
+      cards.innerHTML = '<article class="card"><h3>No hay sorteos visibles</h3><p class="muted">Cuando existan registros públicos, aparecerán aquí.</p></article>';
+      return;
+    }
+
+    const labels = {
+      autorizado: "Información · sin ventas",
+      abierto: "Consulta informativa · sin ventas",
+      pausado: "Pausado",
+      cerrado: "Cerrado",
+      realizado: "Realizado",
+      cancelado: "Cancelado"
+    };
+
+    raffles.forEach((raffle) => {
+      const card = document.createElement("article");
+      card.className = "card";
+
+      const art = document.createElement("div");
+      art.className = "product-art";
+      const tag = document.createElement("span");
+      tag.className = "tag";
+      tag.textContent = labels[raffle.status] || "Informativo";
+      art.appendChild(tag);
+
+      if (raffle.image_url) {
+        const img = document.createElement("img");
+        img.src = raffle.image_url;
+        img.alt = raffle.prize || raffle.title || "Premio";
+        img.loading = "lazy";
+        img.style.cssText = "width:100%;height:100%;object-fit:cover;border-radius:14px";
+        img.onerror = () => { img.remove(); art.append("🎁"); };
+        art.appendChild(img);
+      } else {
+        const icon = document.createElement("span");
+        icon.textContent = "🎁";
+        art.appendChild(icon);
+      }
+
+      const title = document.createElement("h3");
+      title.textContent = raffle.title || "Sorteo informativo";
+      const prize = document.createElement("p");
+      prize.className = "muted";
+      prize.textContent = raffle.prize || raffle.description || "Consulta los detalles publicados.";
+
+      const row = document.createElement("div");
+      row.className = "price-row";
+      const priceWrap = document.createElement("div");
+      const priceLabel = document.createElement("div");
+      priceLabel.className = "muted";
+      priceLabel.textContent = "Precio registrado · no se vende";
+      const price = document.createElement("div");
+      price.className = "price";
+      price.textContent = new Intl.NumberFormat("es-DO", {
+        style: "currency", currency: "DOP", maximumFractionDigits: 2
+      }).format(Number(raffle.ticket_price || 0));
+      priceWrap.append(priceLabel, price);
+
+      const count = document.createElement("div");
+      count.className = "availability";
+      count.textContent = Number(raffle.total_tickets || 0).toLocaleString("es-DO") + " números registrados";
+      row.append(priceWrap, count);
+
+      const note = document.createElement("p");
+      note.className = "muted";
+      note.textContent = "Modo informativo: no se reservan números ni se aceptan pagos.";
+
+      card.append(art, title, prize, row, note);
+      cards.appendChild(card);
+    });
+  } catch (error) {
+    console.error("Error cargando sorteos:", error);
+    cards.innerHTML = '<article class="card"><h3>No pudimos cargar los sorteos</h3><p class="muted">Verifica la URL, la clave publicable, Data API y las políticas RLS. No se ha habilitado ninguna venta.</p></article>';
+  }
+}
+
+loadRafflesFromSupabase();
+
 </script>
 </body></html>
