@@ -142,7 +142,8 @@ if (SUPABASE_PUBLISHABLE_KEY === "PEGA_AQUI_TU_SB_PUBLISHABLE_KEY") {
     });
   } catch (error) {
     console.error("Error cargando sorteos:", error);
-    cards.innerHTML = '<article class="card"><h3>No pudimos cargar los sorteos</h3><p class="muted">Verifica la URL, la clave publicable, Data API y las políticas RLS. No se ha habilitado ninguna venta.</p></article>';
+    cards.innerHTML = '<article class="card"><h3>Error de conexión</h3><p class="muted"></p></article>';
+cards.querySelector('.muted').textContent = error.message;
   }
 }
 
